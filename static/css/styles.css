@@ -1,0 +1,169 @@
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;700&display=swap');
+
+body {
+    font-family: 'Urbanist', sans-serif;
+}
+
+nav a {
+    transition: color 0.3s ease-in-out;
+}
+
+nav a:hover {
+    color: #a77a4f; /* Couleur dorée */
+}
+
+body {
+    font-family: 'Urbanist', sans-serif;
+}
+
+h2 {
+    font-weight: 700;
+}
+
+h3 {
+    font-weight: 600;
+}
+
+
+/* Trait de séparation */
+div.w-20 {
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* Effet d’apparition fluide */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* Trait de séparation */
+div.w-20 {
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* Animation des cartes pricing */
+.p-8 {
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.p-8:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Animation des icônes flottantes */
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+    100% { transform: translateY(0px); }
+}
+
+.animate-float {
+    animation: float 3s ease-in-out infinite;
+}
+
+.animate-float-delay {
+    animation: float 3s ease-in-out infinite;
+    animation-delay: 1s;
+}
+
+a.mt-8.inline-block.bg-\[\#a77a4f\].text-white.px-8.py-3.rounded-full.font-semibold.text-md.shadow-lg.transition.duration-300.hover\:scale-105.hover\:bg-\[\#8b5e34\] {
+    margin-left: -70px;
+}
+
+/* Effet accordéon pour la FAQ */
+.faq-toggle {
+    cursor: pointer;
+}
+
+.faq-answer {
+    transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+/* Icônes Réseaux Sociaux */
+footer img {
+    transition: transform 0.3s ease-in-out;
+}
+
+footer img:hover {
+    transform: scale(1.1);
+}
+
+/* Chatbot Window Styling */
+#chatbot-window {
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Animation d’apparition */
+.hidden {
+    opacity: 0;
+    transform: scale(0.9);
+    display: none;
+}
+
+.visible {
+    opacity: 1;
+    transform: scale(1);
+    display: flex;
+}
+
+/* Messages utilisateur et bot */
+#chatbot-messages p {
+    max-width: 75%;
+    padding: 10px 15px;
+    border-radius: 8px;
+    word-wrap: break-word;
+    display: flex;
+    align-items: center;
+}
+
+.user-message {
+    background: #a77a4f;
+    color: white;
+    align-self: flex-end;
+    border-radius: 15px 15px 0px 15px;
+}
+
+.bot-message {
+    background: #f3f3f3;
+    color: black;
+    align-self: flex-start;
+    border-radius: 15px 15px 15px 0px;
+}
+
+.bot-message img, .user-message img {
+    height: 20px;
+    /* margin-right: 8px; */
+    margin-left: 3px;
+}
+
+/* Quick questions */
+.quick-question {
+    background: #f3f3f3;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.quick-question:hover {
+    background: #e0e0e0;
+}
+
+/* Scroll stylisé */
+#chatbot-messages::-webkit-scrollbar {
+    width: 5px;
+}
+#chatbot-messages::-webkit-scrollbar-thumb {
+    background-color: #a77a4f;
+    border-radius: 5px;
+}

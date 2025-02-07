@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OptiMorph - Essayez vos lunettes en AR</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../static/css/styles.css">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="favicon.png">
+<meta name="theme-color" content="#010101">
+
+</head>
+<body class="bg-white text-black font-inter">
+
+   
+    <header class="py-4 flex justify-center">
+        <img src="../static/logo.png" alt="OptiMorph Logo" class="h-24">
+    </header>
+
+   
+    <nav class="flex justify-center items-center space-x-6 text-base font-medium py-3 max-w-lg mx-auto border-b border-gray-300">
+        <a href="#" class="hover:text-gray-600 transition duration-300">Accueil</a>
+        <a href="{{ url_for('catalogue') }}" class="hover:text-gray-600 transition duration-300">Catalogue</a>
+        <a href="{{ url_for('index') }}" class="bg-black text-white px-5 py-2 rounded-full text-sm font-semibold shadow-md transition duration-300 hover:scale-105 hover:bg-gray-900">
+            Tester maintenant
+        </a>
+        
+        
+    </nav>
+
+   
+    <section class="relative w-full h-[400px] mt-10 flex items-center justify-center">
+        <img src="../static/header.webp" alt="OptiMorph Glasses" class="w-full h-full object-cover">
+        <div class="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-50 text-center px-6">
+            <h1 class="text-white text-4xl font-semibold tracking-tight max-w-3xl leading-tight">
+                Essayez vos lunettes en <span class="text-[#a77a4f]">réalité augmentée</span><br> dès maintenant.
+            </h1>
+            <p class="text-gray-300 text-lg mt-3 max-w-lg">
+                Découvrez le futur de l’essayage de lunettes, directement depuis votre écran.
+            </p>
+            <a href="{{ url_for('index') }}" class="mt-6 bg-[#a77a4f] text-white px-7 py-3 rounded-full font-semibold text-md shadow-lg transition duration-300 hover:scale-105 hover:bg-[#8b5e34]">
+                Tester gratuitement maintenant
+            </a>
+        </div>
+    </section>
+
+
+ 
+<section class="py-20 bg-white text-black text-center">
+    <h2 class="text-4xl font-bold tracking-tight">Pourquoi choisir <span class="text-[#a77a4f]">OptiMorph</span> ?</h2>
+    <p class="text-gray-600 text-lg mt-3 max-w-2xl mx-auto">
+        Essayez vos lunettes en AR avec une précision inégalée et une expérience immersive.
+    </p>
+
+    <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto px-6">
+ 
+        <div class="p-6 bg-gray-100 rounded-lg shadow-md hover:shadow-lg transition">
+            <img src="../static/iconar.png" alt="AR Experience" class="h-16 mx-auto mb-4">
+            <h3 class="text-2xl font-semibold">Expérience en Réalité Augmentée</h3>
+            <p class="text-gray-600 mt-2">
+                Visualisez en temps réel vos lunettes sur votre visage avec une précision inégalée.
+            </p>
+        </div>
+
+  
+        <div class="p-6 bg-gray-100 rounded-lg shadow-md hover:shadow-lg transition">
+            <img src="../static/iconabo.png" alt="Flexible Subscription" class="h-16 mx-auto mb-4">
+            <h3 class="text-2xl font-semibold">Abonnement flexible</h3>
+            <p class="text-gray-600 mt-2">
+                Changez de lunettes selon vos envies, sans engagement et en toute simplicité.
+            </p>
+        </div>
+
+       
+        <div class="p-6 bg-gray-100 rounded-lg shadow-md hover:shadow-lg transition">
+            <img src="../static/iconqualite.png" alt="Premium Quality" class="h-16 mx-auto mb-4">
+            <h3 class="text-2xl font-semibold">Lunettes de haute qualité</h3>
+            <p class="text-gray-600 mt-2">
+                Des modèles premium soigneusement sélectionnés pour un style et un confort parfaits.
+            </p>
+        </div>
+    </div>
+</section>
+
+
+<div class="w-20 h-1 bg-[#a77a4f] mx-auto my-12"></div>
+
+<section class="py-20 bg-gray-100">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center px-6">
+        
+      
+        <div class="md:w-1/2 w-full flex justify-center">
+            <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExOGJwNGpwdzZvMWFyaDFsZnBqd3RuZjk4ZmQ4YzllbWgybGYwY2NwbSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/YKn88egd7lN8A/giphy.gif" alt="Test lunettes en AR" class="rounded-lg shadow-lg w-[80%]">
+        </div>
+
+        
+        <div class="md:w-1/2 w-full mt-10 md:mt-0 md:pl-10 text-center md:text-left">
+            <h2 class="text-4xl font-bold tracking-tight">
+                Essayez vos lunettes en <br><span class="text-[#a77a4f]">réalité augmentée</span>
+            </h2>
+            <p class="text-gray-600 text-lg mt-4">
+                Découvrez votre look avant d’acheter. Grâce à la technologie AR, visualisez en temps réel comment chaque modèle s’adapte à votre visage. Plus besoin d’aller en boutique, testez directement depuis chez vous !
+            </p>
+            <a href="{{ url_for('catalogue') }}" class="mt-6 inline-block bg-[#a77a4f] text-white px-8 py-3 rounded-full font-semibold text-md shadow-lg transition duration-300 hover:scale-105 hover:bg-[#8b5e34]">
+                👓 Tester mes lunettes maintenant
+            </a>
+        </div>
+        
+    </div>
+</section>
+
+<div class="w-20 h-1 bg-[#a77a4f] mx-auto my-12"></div>
+
+
+<section class="py-20 bg-white text-center">
+    <h2 class="text-4xl font-bold tracking-tight">Choisissez votre offre <span class="text-[#a77a4f]">OptiMorph</span></h2>
+    <p class="text-gray-600 text-lg mt-3 max-w-2xl mx-auto">
+        Accédez à l’essayage en AR et trouvez la paire parfaite avec l’abonnement qui vous correspond.
+    </p>
+
+    <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto px-6">
+        
+    
+        <div class="p-8 border border-gray-300 rounded-lg shadow-md hover:shadow-lg transition bg-gray-100">
+            <h3 class="text-2xl font-semibold text-gray-800">Essai Gratuit</h3>
+            <p class="text-gray-500 mt-2">Essayez gratuitement pendant 7 jours</p>
+            <p class="text-4xl font-bold text-black mt-6">0€</p>
+            <p class="text-gray-500 text-sm">Sans engagement</p>
+            <ul class="mt-4 space-y-2 text-gray-600">
+                <li>✅ 7 jours d’accès à l’essai en AR</li>
+                <li>✅ Accès aux modèles standards</li>
+                <li>❌ Modèles premium exclus</li>
+            </ul>
+            <a href="#" class="mt-6 inline-block bg-black text-white px-6 py-3 rounded-full font-semibold text-md shadow-lg transition duration-300 hover:scale-105 hover:bg-gray-900">
+                Commencer l’essai gratuit
+            </a>
+        </div>
+
+        <div class="p-8 border border-gray-300 rounded-lg shadow-lg hover:shadow-xl transition bg-white scale-105 relative">
+            <span class="absolute top-0 right-0 bg-[#a77a4f] text-white text-xs font-bold px-3 py-1 rounded-bl-lg">Populaire</span>
+            <h3 class="text-2xl font-semibold text-gray-800">Standard</h3>
+            <p class="text-gray-500 mt-2">Accédez à l’essai AR et plus</p>
+            <p class="text-4xl font-bold text-black mt-6">9,99€/mois</p>
+            <p class="text-gray-500 text-sm">Facturation mensuelle</p>
+            <ul class="mt-4 space-y-2 text-gray-600">
+                <li>✅ Essai illimité en AR</li>
+                <li>✅ Accès à toute la collection</li>
+                <li>✅ Assistance prioritaire</li>
+            </ul>
+            <a href="#" class="mt-6 inline-block bg-[#a77a4f] text-white px-6 py-3 rounded-full font-semibold text-md shadow-lg transition duration-300 hover:scale-105 hover:bg-[#8b5e34]">
+                S’abonner maintenant
+            </a>
+        </div>
+
+      
+        <div class="p-8 border border-gray-300 rounded-lg shadow-md hover:shadow-lg transition bg-gray-100">
+            <h3 class="text-2xl font-semibold text-gray-800">Premium</h3>
+            <p class="text-gray-500 mt-2">Expérience complète et accès VIP</p>
+            <p class="text-4xl font-bold text-black mt-6">19,99€/mois</p>
+            <p class="text-gray-500 text-sm">Facturation mensuelle</p>
+            <ul class="mt-4 space-y-2 text-gray-600">
+                <li>✅ Tous les avantages du Standard</li>
+                <li>✅ Accès exclusif aux modèles premium</li>
+                <li>✅ Service VIP & livraison prioritaire</li>
+            </ul>
+            <a href="#" class="mt-6 inline-block bg-black text-white px-6 py-3 rounded-full font-semibold text-md shadow-lg transition duration-300 hover:scale-105 hover:bg-gray-900">
+                Rejoindre Premium
+            </a>
+        </div>
+
+    </div>
+</section>
+
+
+<div class="w-20 h-1 bg-[#a77a4f] mx-auto my-12"></div>
+
+<section class="relative w-full h-[500px] bg-cover bg-center flex flex-col items-center justify-center text-center text-white px-6"
+    style="background-image: url('../static/eco.jpg');">
+    
+    <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+
+    <div class="relative z-10 max-w-4xl">
+        <h2 class="text-4xl font-bold tracking-tight">
+            Une mode responsable avec <span class="text-[#a77a4f]">OptiMorph</span>
+        </h2>
+        <p class="text-lg mt-4">
+            Parce que chaque geste compte, nous nous engageons à créer des lunettes qui respectent la planète.
+        </p>
+
+        <div class="flex justify-center space-x-10 mt-10">
+            <div class="flex flex-col items-center space-y-2">
+                <img src="../static/recyclage.png" alt="Matériaux recyclés" class="h-14 animate-float">
+                <p class="text-sm">Matériaux recyclés</p>
+            </div>
+            <div class="flex flex-col items-center space-y-2">
+                <img src="../static/18241610.png" alt="Production Responsable" class="h-14 animate-float-delay">
+                <p class="text-sm">Production responsable</p>
+            </div>
+            <div class="flex flex-col items-center space-y-2">
+                <img src="../static/reforestation.png" alt="Reforestation" class="h-14 animate-float">
+                <p class="text-sm">1 paire achetée = 1 arbre planté</p>
+            </div>
+        </div>
+
+        
+        <a href="#" class="mt-8 inline-block bg-[#a77a4f] text-white px-8 py-3 rounded-full font-semibold text-md shadow-lg transition duration-300 hover:scale-105 hover:bg-[#8b5e34]">
+            🌿 Découvrir notre engagement
+        </a>
+    </div>
+</section>
+
+<div class="w-20 h-1 bg-[#a77a4f] mx-auto my-12"></div>
+
+<section class="py-20 bg-white text-center">
+    <h2 class="text-4xl font-bold tracking-tight">Questions fréquemment posées</h2>
+    <p class="text-gray-600 text-lg mt-3 max-w-2xl mx-auto">
+        Vous avez des questions ? Voici les réponses aux interrogations les plus courantes.
+    </p>
+
+    <div class="mt-12 max-w-3xl mx-auto">
+        <div class="border-b border-gray-300 py-4">
+            <button class="faq-toggle flex justify-between items-center w-full text-left text-lg font-semibold">
+                Comment fonctionne l’essai en réalité augmentée ? 
+                <span class="text-[#a77a4f]">+</span>
+            </button>
+            <p class="faq-answer text-gray-600 mt-2 hidden">
+                Grâce à la technologie AR, vous pouvez visualiser en temps réel comment les lunettes s’adaptent à votre visage en utilisant la caméra de votre téléphone ou ordinateur.
+            </p>
+        </div>
+
+        <div class="border-b border-gray-300 py-4">
+            <button class="faq-toggle flex justify-between items-center w-full text-left text-lg font-semibold">
+                L’abonnement est-il sans engagement ?
+                <span class="text-[#a77a4f]">+</span>
+            </button>
+            <p class="faq-answer text-gray-600 mt-2 hidden">
+                Oui, vous pouvez résilier votre abonnement à tout moment, sans frais cachés.
+            </p>
+        </div>
+
+        <div class="border-b border-gray-300 py-4">
+            <button class="faq-toggle flex justify-between items-center w-full text-left text-lg font-semibold">
+                Quels sont les matériaux utilisés pour les lunettes ?
+                <span class="text-[#a77a4f]">+</span>
+            </button>
+            <p class="faq-answer text-gray-600 mt-2 hidden">
+                Nos lunettes sont fabriquées avec des matériaux recyclés et durables pour réduire notre empreinte environnementale.
+            </p>
+        </div>
+    </div>
+</section>
+<!-- CHATBOT FLOATING BUTTON -->
+<div id="chatbot-container" class="fixed bottom-6 right-6 z-50">
+    <!-- Bouton pour ouvrir le chatbot -->
+    <button id="chatbot-btn" class="bg-[#a77a4f] text-white w-14 h-14 flex items-center justify-center rounded-full shadow-lg hover:scale-105 transition duration-300">
+        💬
+    </button>
+
+    <!-- Fenêtre du chatbot -->
+    <div id="chatbot-window" class="hidden bg-white shadow-lg rounded-lg w-96 h-[500px] absolute bottom-16 right-0 flex flex-col">
+        <div class="flex justify-between items-center bg-[#a77a4f] text-white p-4 rounded-t-lg">
+            <h3 class="text-lg font-semibold">👋 Besoin d'aide ?</h3>
+            <button id="close-chatbot" class="text-white hover:opacity-80">✖</button>
+        </div>
+
+        <!-- Conteneur des messages -->
+        <div id="chatbot-messages" class="h-72 overflow-y-auto p-4 bg-gray-100 flex flex-col space-y-2">
+            <p class="bot-message flex items-center space-x-2">
+                <img src="../static/iconbot.png" alt="Bot" class="h-6">
+                <span>Bonjour ! Comment puis-je vous aider ?</span>
+            </p>
+        </div>
+
+        <!-- Questions rapides -->
+        <div class="p-3 bg-white border-t">
+            <p class="text-sm font-semibold text-gray-600">Questions fréquentes :</p>
+            <div class="flex space-x-2 mt-2">
+                <button class="quick-question">Prix des abonnements</button>
+                <button class="quick-question">Comment tester en AR ?</button>
+                <button class="quick-question">Contact et support</button>
+            </div>
+        </div>
+
+        <!-- Zone d'envoi -->
+        <div class="flex items-center border-t p-3 bg-white rounded-b-lg">
+            <input type="text" id="chatbot-input" placeholder="Écrivez un message..." class="flex-1 border rounded-lg px-3 py-2 focus:outline-none">
+            <button id="send-chatbot" class="ml-3">
+                <img src="../static/iconsend.png" alt="Envoyer" class="h-6 cursor-pointer">
+            </button>
+        </div>
+    </div>
+</div>
+
+
+<footer class="bg-black text-white py-10 text-center">
+    <div class="max-w-5xl mx-auto">
+        <div class="flex justify-center space-x-6">
+            <a href="#" class="hover:text-gray-400 transition duration-300">Accueil</a>
+            <a href="#" class="hover:text-gray-400 transition duration-300">Prix</a>
+            <a href="#" class="hover:text-gray-400 transition duration-300">Contact</a>
+            <a href="#" class="hover:text-gray-400 transition duration-300">Mentions légales</a>
+        </div>
+
+        <p class="mt-6 text-gray-400 text-sm">© 2024 OptiMorph. Tous droits réservés.</p>
+    </div>
+</footer>
+
+<script>
+    
+    document.querySelectorAll(".faq-toggle").forEach(button => {
+        button.addEventListener("click", () => {
+            const answer = button.nextElementSibling;
+            answer.classList.toggle("hidden");
+        });
+    });
+    </script>
+   <script>
+    const chatbotBtn = document.getElementById("chatbot-btn");
+    const chatbotWindow = document.getElementById("chatbot-window");
+    const closeChatbot = document.getElementById("close-chatbot");
+    const sendChatbot = document.getElementById("send-chatbot");
+    const chatbotInput = document.getElementById("chatbot-input");
+    const chatbotMessages = document.getElementById("chatbot-messages");
+    const quickQuestions = document.querySelectorAll(".quick-question");
+    
+    // Ouvrir / Fermer le chatbot
+    chatbotBtn.addEventListener("click", () => {
+        chatbotWindow.classList.toggle("hidden");
+        chatbotWindow.classList.toggle("visible");
+    });
+    
+    closeChatbot.addEventListener("click", () => {
+        chatbotWindow.classList.add("hidden");
+        chatbotWindow.classList.remove("visible");
+    });
+    
+    // Fonction pour envoyer un message
+    sendChatbot.addEventListener("click", () => sendMessage());
+    chatbotInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") sendMessage();
+    });
+    
+    function sendMessage() {
+        const userMessage = chatbotInput.value.trim();
+        if (userMessage === "") return;
+    
+        appendMessage(userMessage, "user-message", "iconperson.png");
+        chatbotInput.value = "";
+    
+        // Afficher "saisie en cours..."
+        const typingIndicator = document.createElement("p");
+        typingIndicator.classList.add("bot-message");
+        typingIndicator.innerHTML = `<img src="iconbot.png" alt="Bot"> <span>...</span>`;
+        chatbotMessages.appendChild(typingIndicator);
+        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+    
+        // Obtenir la réponse de l'IA
+        setTimeout(async () => {
+            typingIndicator.remove();
+            const botResponse = await fetchChatbotResponse(userMessage);
+            appendMessage(botResponse, "bot-message", "iconbot.png");
+        }, 1200);
+    }
+    
+    // Fonction pour afficher un message dans le chat
+    function appendMessage(message, className, icon) {
+        const msgElement = document.createElement("p");
+        msgElement.classList.add(className);
+        msgElement.innerHTML = ` <span>${message}</span>`;
+        chatbotMessages.appendChild(msgElement);
+        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+    }
+    
+
+    </script>
+    
+        
+    
+</body>
+</html>

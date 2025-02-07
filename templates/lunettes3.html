@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.socket.io/4.4.1/socket.io.min.js"></script>
+    <title>Modèle glasses - Lensify</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;800&display=swap');
+        body {
+            font-family: 'Urbanist', sans-serif;
+            background: linear-gradient(135deg, #a77a4f, #8a5a3a);
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen text-white p-6">
+    
+    <img src="../static/logo.png" alt="Logo" class="w-32 mb-6">
+    <h1 class="text-5xl font-extrabold mb-8 text-center uppercase tracking-wide">Essayez Vos glasses en Réalité Virtuelle</h1>
+    <p class="text-lg text-center  mb-8">Découvrez l'avenir du shopping optique : essayez vos glasses préférées sans quitter votre domicile.</p>
+
+    <div class="flex space-x-4 mt-6">
+        <a href="{{ url_for('lunette2') }}" class="py-2 px-4 bg-gray-500 text-white font-bold rounded-lg shadow-lg hover:bg-gray-600 transition">
+            ⬅ Modèle précédent
+        </a>
+        <a href="{{ url_for('lunette4') }}" class="py-2 px-4 bg-gray-500 text-white font-bold rounded-lg shadow-lg hover:bg-gray-600 transition">
+            Modèle suivant ➡
+        </a>
+
+    </div>
+    <br>
+    <a href="{{ url_for('catalogue') }}" class="py-2 px-4 bg-red-500 text-white font-bold rounded-lg shadow-lg hover:bg-red-600 transition">
+        Voir le catalogue
+     </a>
+    <div id="mainContainer" class="flex items-center justify-center w-full max-w-7xl gap-12 p-8">
+        
+        <!-- Section Produit (Initialement centrée) -->
+        <div id="productSection" class="w-2/3 bg-white text-gray-900 p-8 rounded-xl shadow-xl flex flex-col items-center border border-gray-300 transition-all">
+            <img src="../static/glasses3.png" alt="Modèle 2" class="w-2/3 rounded-lg shadow-lg mb-4 transform hover:scale-105 transition-transform" data-id="3">
+            <h1 class="text-2xl font-bold text-center">Modèle Sport</h1>
+            <p class="text-gray-600 text-sm text-center mt-2">Légèreté et confort pour une performance optimale.</p>
+            <p class="text-2xl font-bold text-gray-800 mt-2">179,99€</p>
+            <div class="flex items-center mt-2 space-x-1">
+                <span class="text-yellow-400 text-xl">★</span>
+                <span class="text-yellow-400 text-xl">★</span>
+                <span class="text-yellow-400 text-xl">★</span>
+                <span class="text-yellow-400 text-xl">★</span>
+                <span class="text-gray-400 text-xl">☆</span>
+                <span class="text-gray-600 ml-2 text-sm">(120 avis)</span>
+            </div>
+            <button onclick="startTest()" class="mt-6 w-full py-3 bg-[#a77a4f] text-white font-bold rounded-lg shadow-lg hover:bg-[#8a5a3a] transition">Essayer en VR</button>
+            <button class="mt-4 w-full py-3 bg-green-600 text-white font-bold rounded-lg shadow-lg hover:bg-green-700 transition">Ajouter au panier</button>
+            <p class="mt-4 text-gray-500 text-sm">Livraison rapide et retour gratuit.</p>
+        </div>
+        
+        <!-- Section Caméra (Masquée initialement) -->
+        <div id="cameraSection" class="w-2/3 flex flex-col items-center bg-white/20 p-6 rounded-xl shadow-lg border border-white/30 hidden">
+            <div class="relative w-full aspect-w-16 aspect-h-9 rounded-lg overflow-hidden shadow-md">
+                <canvas id="videoCanvas" class="w-full h-full"></canvas>
+            </div>
+            <p id="loading" class="text-center mt-4 hidden text-lg animate-pulse">Chargement en cours...</p>
+        </div>
+    </div>
+
+    <script>
+        const socket = io();
+        let selectedGlasses = document.querySelector("[data-id]").getAttribute("data-id");
+        console.log("✅ glasses sélectionnées: ", selectedGlasses);
+
+        function startTest() {
+            console.log("🕶️ Démarrage essai VR ID:", selectedGlasses);
+            document.getElementById('cameraSection').classList.remove('hidden');
+            document.getElementById('loading').classList.remove('hidden');
+            document.getElementById('videoCanvas').classList.add('hidden');
+            document.getElementById('productSection').classList.remove('w-2/3');
+            document.getElementById('productSection').classList.add('w-1/3');
+            document.getElementById('mainContainer').classList.remove('justify-center');
+            document.getElementById('mainContainer').classList.add('flex-row', 'justify-between');
+            
+            socket.emit('start_video', { glasses_id: parseInt(selectedGlasses) });
+            const canvas = document.getElementById('videoCanvas');
+            const ctx = canvas.getContext('2d');
+
+            socket.on('video_frame', (data) => {
+                console.log("📸 Image reçue");
+                const image = new Image();
+                image.src = 'data:image/jpeg;base64,' + btoa(String.fromCharCode(...new Uint8Array(data.image)));
+                image.onload = () => {
+                    document.getElementById('loading').classList.add('hidden');
+                    canvas.classList.remove('hidden');
+                    canvas.width = image.width;
+                    canvas.height = image.height;
+                    ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+                };
+            });
+
+            socket.on('error', (data) => {
+                console.error("❌ Erreur WebSocket :", data.message);
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analyse du Visage</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;800&display=swap');
+
+        body {
+            font-family: 'Urbanist', sans-serif;
+            background: linear-gradient(135deg, #a77a4f, #8a5a3a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            color: white;
+        }
+
+        .analysis-container {
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            max-width: 600px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .analysis-title {
+            font-size: 3rem;
+            font-weight: 800;
+            color: white;
+        }
+
+        .analysis-subtitle {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        #analyzeButton {
+            background-color: white;
+            color: #a77a4f;
+            font-weight: bold;
+            border-radius: 50px;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: background 0.3s, transform 0.2s;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        #analyzeButton:hover {
+            background-color: #8a5a3a;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        #loadingText {
+            display: none;
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.9);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+
+        .results-container {
+            display: none;
+            background: white;
+            color: #333;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 2px solid #ddd;
+            text-align: center;
+            margin-top: 20px;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .results-container h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #a77a4f;
+        }
+
+        .results-container p {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .video-container {
+            margin-top: 20px;
+            width: 100%;
+            max-width: 500px;
+            aspect-ratio: 16/9;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 4px solid #a77a4f;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="analysis-container">
+        <h1 class="analysis-title">Analyse du Visage</h1>
+        <p class="analysis-subtitle">Découvrez la forme et les dimensions de votre visage.</p>
+        <button id="analyzeButton" onclick="startFaceAnalysis()">🔍 Lancer l'analyse</button>
+        <p id="loadingText">🔄 Analyse en cours...</p>
+        
+        <div class="video-container" id="videoContainer">
+            <video id="videoElement" autoplay playsinline class="w-full h-full"></video>
+        </div>
+        
+        <div id="results" class="results-container">
+            <h3>📊 Résultats :</h3>
+            <p id="faceSize"></p>
+            <p id="faceShape"></p>
+            <p id="eyeDistance"></p>
+        </div>
+
+        <div id="recommendedGlassesContainer" style="display: none; margin-top: 20px;">
+    <h3>Lunettes recommandées selon la forme de votre visage :</h3>
+    <a id="glassesLink" href="#" target="_blank">
+        <img id="recommendedGlasses" src="" alt="Lunettes recommandées" style="width: 150px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
+    </a>
+</div>
+
+    </div>
+
+    
+
+    <script>
+
+const lunettesRecommandees = {
+    "Oval": "../static/glasses1.png",
+    "Rectangulaire": "../static/glasses2.png",
+    "Rond": "../static/glasses3.png",
+    "Carré": "../static/glasses4.png"
+};
+
+        async function startFaceAnalysis() {
+            const button = document.getElementById('analyzeButton');
+            const loadingText = document.getElementById('loadingText');
+            const results = document.getElementById('results');
+            const videoContainer = document.getElementById('videoContainer');
+            const video = document.getElementById('videoElement');
+            let stream;
+
+            button.textContent = '🔄 Analyse en cours...';
+            button.disabled = true;
+            loadingText.style.display = 'block';
+            results.style.display = 'none';
+            videoContainer.style.display = 'block';
+
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                video.srcObject = stream;
+
+                setTimeout(async () => {
+                    stream.getTracks().forEach(track => track.stop());
+                    videoContainer.style.display = 'none';
+
+                    const response = await fetch('/api/analyse-visage', { method: 'POST' });
+                    const data = await response.json();
+
+                    if (data.error) {
+    alert(`Erreur: ${data.error}`);
+} else {
+    document.getElementById('faceSize').textContent = `Taille du visage : ${data.face_size} cm`;
+    document.getElementById('faceShape').textContent = `Forme du visage : ${data.face_shape}`;
+    document.getElementById('eyeDistance').textContent = `Distance entre les yeux : ${data.eye_distance} cm`;
+
+    const lunettesImage = lunettesRecommandees[data.face_shape] || "default.png";
+    document.getElementById('recommendedGlasses').src = `/static/${lunettesImage}`;
+    document.getElementById('glassesLink').href = `/lunette${Object.keys(lunettesRecommandees).indexOf(data.face_shape) + 1}`; 
+    document.getElementById('recommendedGlassesContainer').style.display = 'block';
+
+    loadingText.style.display = 'none';
+    results.style.display = 'block';
+}
+
+
+
+                    button.textContent = '🔍 Relancer lanalyse';
+                    button.disabled = false;
+                }, 3000);
+            } catch (err) {
+                alert("Impossible d'accéder à la caméra.");
+                button.textContent = '🔍 Analyse du visage';
+                button.disabled = false;
+                loadingText.style.display = 'none';
+                videoContainer.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

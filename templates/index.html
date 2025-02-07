@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.socket.io/4.4.1/socket.io.min.js"></script>
+    <title>Essai de glasses en AR</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;800&display=swap');
+        body {
+            font-family: 'Urbanist', sans-serif;
+            background: linear-gradient(135deg, #a77a4f, #8a5a3a);
+        }
+        .glasses-item.selected {
+            border: 3px solid #a77a4f;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 1000px; /* Agrandissement de la caméra */
+            aspect-ratio: 16/9;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        .logo {
+            width: 150px; /* Ajustez la taille de votre logo ici */
+            margin: 0 auto;
+            display: block;
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen text-white p-6">
+    <!-- Logo en haut au milieu -->
+    <img src="/static/logo.png" alt="Logo" class="logo">
+
+    <div class="text-center mb-8">
+        <h1 class="text-5xl font-extrabold">Essaye tes glasses en réalité augmentée</h1>
+        <p class="text-white/80 mt-2">Découvre ton style en un clic.</p>
+    </div>
+
+    <div class="flex flex-col lg:flex-row items-start w-full max-w-6xl gap-8">
+        <div class="video-container">
+            <canvas id="videoCanvas" class="w-full h-full"></canvas>
+            <p id="loading" class="text-center mt-2 hidden">Chargement en cours...</p>
+        </div>
+
+        <div class="glasses-container bg-white/20 backdrop-blur-md rounded-2xl p-6 w-full lg:w-auto">
+            <h2 class="text-2xl font-bold mb-4">Choisis tes lunettes</h2>
+            <div class="grid grid-cols-2 gap-4" id="glassesGrid">
+                <div class="glasses-item p-2 bg-white rounded-lg shadow-md cursor-pointer" onclick="selectGlasses(1)">
+                    <img src="../static/glasses1.png" alt="glasses 1" class="w-24 rounded"> <!-- Taille réduite des glasses -->
+                </div>
+                <div class="glasses-item p-2 bg-white rounded-lg shadow-md cursor-pointer" onclick="selectGlasses(2)">
+                    <img src="../static/glasses2.png" alt="glasses 2" class="w-24 rounded"> <!-- Taille réduite des glasses -->
+                </div>
+                <div class="glasses-item p-2 bg-white rounded-lg shadow-md cursor-pointer" onclick="selectGlasses(3)">
+                    <img src="../static/glasses3.png" alt="glasses 3" class="w-24 rounded"> <!-- Taille réduite des glasses -->
+                </div>
+                <div class="glasses-item p-2 bg-white rounded-lg shadow-md cursor-pointer" onclick="selectGlasses(4)">
+                    <img src="../static/glasses4.png" alt="glasses 4" class="w-24 rounded"> <!-- Taille réduite des glasses -->
+                </div>
+            </div>
+            <button class="mt-6 px-6 py-2 bg-[#a77a4f] text-white rounded-lg shadow hover:bg-[#8a5a3a]" onclick="startTest()">Essayer en VR</button>
+
+        </div>
+    </div>
+
+    <script>
+        let selectedGlasses = null;
+        const socket = io();
+
+        function selectGlasses(id) {
+            selectedGlasses = id;
+            socket.emit('update_glasses', { glasses_id: selectedGlasses });
+        }
+
+        function startTest() {
+            if (!selectedGlasses) {
+                alert("Veuillez sélectionner une paire de lunettes avant de continuer.");
+                return;
+            }
+
+            // Afficher le message de chargement
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('videoCanvas').style.display = 'none';
+
+            // Démarrer le flux vidéo
+            socket.emit('start_video', { glasses_id: selectedGlasses });
+
+            const canvas = document.getElementById('videoCanvas');
+            const ctx = canvas.getContext('2d');
+
+            socket.on('video_frame', (data) => {
+                const image = new Image();
+                image.src = 'data:image/jpeg;base64,' + btoa(String.fromCharCode(...new Uint8Array(data.image)));
+                image.onload = () => {
+                    document.getElementById('loading').style.display = 'none';
+                    canvas.style.display = 'block';
+                    canvas.width = image.width;
+                    canvas.height = image.height;
+                    ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+                };
+            });
+        }
+    </script>
+</body>
+</html>
